@@ -9,15 +9,14 @@ public class User {
     private final int electroCount1;
     private final int electroCount2;
 
-    public User(String line) {
-        String[] data = line.split("\\|");
-        this.id = Integer.parseInt(data[0]);
-        this.name = data[1];
-        this.waterCount = Integer.parseInt(data[2]);
-        this.gasCount1 = Integer.parseInt(data[3]);
-        this.gasCount2 = Integer.parseInt(data[4]);
-        this.electroCount1 = Integer.parseInt(data[5]);
-        this.electroCount2 = Integer.parseInt(data[6]);
+    public User(int id, String name, int waterCount, int gasCount1, int gasCount2, int electroCount1, int electroCount2) {
+        this.id = id;
+        this.name = name;
+        this.waterCount = waterCount;
+        this.gasCount1 = gasCount1;
+        this.gasCount2 = gasCount2;
+        this.electroCount1 = electroCount1;
+        this.electroCount2 = electroCount2;
     }
 
     public String getName() {

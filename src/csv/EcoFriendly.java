@@ -1,7 +1,5 @@
 package csv;
 
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class EcoFriendly {
@@ -11,14 +9,12 @@ public class EcoFriendly {
         final String pathToCreate = "S:\\csv\\aa.txt";
 
         try {
-            FileReader fileReader = new FileReader(filePath);
-            FileWriter fileWriter = new FileWriter(pathToCreate);
-            FileProcess fileProcess = new FileProcess(maxConsumption);
+            DataReader fileReader = new CSVReader();
+            DataWriter dataWriter = new FileDataWriter();
+            Validator validator = new CheckingService(maxConsumption);
 
-            fileProcess.processFile(fileReader, fileWriter);
-
-            fileReader.close();
-            fileWriter.close();
+            FileProcess fileProcess = new FileProcess(maxConsumption, fileReader, dataWriter, validator);
+            fileProcess.processFile(filePath, pathToCreate);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

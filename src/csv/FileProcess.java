@@ -3,28 +3,26 @@ package csv;
 import java.io.*;
 
 public class FileProcess {
+    private final int maxConsumption;
+    private final DataReader reader;
+    private final DataWriter writer;
     private final Validator validator;
 
-    public FileProcess(int maxConsumption) {
-        this.validator = new CheckingService(maxConsumption);
+    public FileProcess(int maxConsumption, DataReader reader, DataWriter writer, Validator validator) {
+        this.maxConsumption = maxConsumption;
+        this.reader = reader;
+        this.writer = writer;
+        this.validator = validator;
     }
 
-    public void processFile(FileReader fileReader, FileWriter fileWriter) throws IOException {
-        BufferedReader reader = new BufferedReader(fileReader);
-        BufferedWriter writer = new BufferedWriter(fileWriter);
+    public void processFile(String filePath, String pathToCreate) throws IOException {
+        writer.writeFirstString(pathToCreate, "id|name|waterCount|gasCount1|gasCount2|electroCount1|electroCount2\n");
 
-        reader.readLine();
-        writer.write("id|name|waterCount|gasCount1|gasCount2|electroCount1|electroCount2\n");
-
-        String line;
-        while ((line = reader.readLine()) != null) {
-            User user = new User(line);
+        User user;
+        while ((user = reader.read(filePath)) != null) {
             if (validator.isValid(user)) {
-                writer.write(user + "\n");
-
+                writer.write(pathToCreate, user);
             }
         }
-        reader.close();
-        writer.close();
     }
 }
