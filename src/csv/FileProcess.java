@@ -20,7 +20,7 @@ public class FileProcess {
 
         User user;
         while ((user = reader.read(filePath)) != null) {
-            if (validator.isValid(user)) {
+            if (validator.isValid(user, maxConsumption)) {
                 writer.write(pathToCreate, user);
             }
         }

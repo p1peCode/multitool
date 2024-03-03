@@ -8,7 +8,7 @@ public class CheckingService implements Validator {
     }
 
     @Override
-    public boolean isValid(User user) {
+    public boolean isValid(User user, int maxConsumption) {
         return user.getElectroCount1() + user.getElectroCount2() < maxConsumption &&
                 user.getGasCount1() + user.getGasCount2() < maxConsumption &&
                 user.getWaterCount() < maxConsumption;

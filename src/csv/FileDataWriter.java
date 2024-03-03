@@ -5,23 +5,27 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileDataWriter implements DataWriter {
+    private BufferedWriter writer;
+
+    public FileDataWriter(String filePath) throws IOException {
+        this.writer = new BufferedWriter(new FileWriter(filePath));
+    }
 
     @Override
     public void write(String filePath, User user) throws IOException {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+        if (writer == null) {
+            throw new IOException();
+        } else {
             writer.write(user.toString() + "\n");
         }
     }
 
     @Override
     public void writeFirstString(String filePath, String str) throws IOException {
-        BufferedWriter writer = null;
-        try {
-            writer = new BufferedWriter(new FileWriter(filePath));
-        } finally {
-            if (writer != null) {
-                writer.close();
-            }
-        }
+        writer.write(str);
+    }
+
+    public void close() throws IOException {
+        writer.close();
     }
 }
