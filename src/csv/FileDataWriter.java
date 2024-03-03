@@ -3,29 +3,17 @@ package csv;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 public class FileDataWriter implements DataWriter {
-    private BufferedWriter writer;
-
-    public FileDataWriter(String filePath) throws IOException {
-        this.writer = new BufferedWriter(new FileWriter(filePath));
-    }
 
     @Override
-    public void write(String filePath, User user) throws IOException {
-        if (writer == null) {
-            throw new IOException();
-        } else {
-            writer.write(user.toString() + "\n");
+    public void write(String filePath, List<User> users) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("id|name|waterCount|gasCount1|gasCount2|electroCount1|electroCount2\n");
+            for (User user : users) {
+                writer.write(user.toString() + "\n");
+            }
         }
-    }
-
-    @Override
-    public void writeFirstString(String filePath, String str) throws IOException {
-        writer.write(str);
-    }
-
-    public void close() throws IOException {
-        writer.close();
     }
 }

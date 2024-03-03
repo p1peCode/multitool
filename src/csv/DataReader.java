@@ -1,7 +1,8 @@
 package csv;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface DataReader {
-    User read(String path) throws IOException;
+    List<User> read(String path) throws IOException;
 }
